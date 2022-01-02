@@ -8,6 +8,13 @@ class NewTransaction extends StatelessWidget {
   final titleController = TextEditingController();
   final amountController = TextEditingController();
 
+  void onSubmitted() {
+    var titleText = titleController.text;
+    var amountText = double.parse(amountController.text);
+    if (titleText.isEmpty || amountText.isNaN || amountText < 0) return;
+    addTx(titleText, amountText);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -22,20 +29,19 @@ class NewTransaction extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
               TextField(
+                onSubmitted: (_) => onSubmitted(),
                 decoration: InputDecoration(labelText: 'title'),
                 controller: titleController,
                 onChanged: (value) {},
               ),
               TextField(
+                onSubmitted: (_) => onSubmitted(),
                 keyboardType: TextInputType.number,
                 decoration: InputDecoration(labelText: 'amount'),
                 controller: amountController,
               ),
               TextButton(
-                onPressed: () {
-                  addTx(titleController.text,
-                      double.parse(amountController.text));
-                },
+                onPressed: onSubmitted,
                 child: Text(
                   'add item',
                   style: TextStyle(color: Colors.green, fontSize: 20),

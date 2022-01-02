@@ -20,7 +20,7 @@ class TransactionList extends StatelessWidget {
               borderRadius: BorderRadius.circular(10),
             ),
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Container(
@@ -29,7 +29,7 @@ class TransactionList extends StatelessWidget {
                   decoration: BoxDecoration(
                     border: Border.all(color: Colors.green, width: 2),
                   ),
-                  child: Text(transactions[index].amount.toString()),
+                  child: Text(transactions[index].amount.toStringAsFixed(2)),
                 ),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
