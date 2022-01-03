@@ -15,11 +15,17 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final ThemeData theme = ThemeData(
+      fontFamily: 'Quicksand',
+    );
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
+      theme: theme.copyWith(
+        colorScheme: theme.colorScheme.copyWith(
+            primary: Colors.purple,
+            secondary: Colors.teal,
+            tertiary: Colors.green),
       ),
       home: MyHomePage(),
     );
@@ -33,18 +39,18 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   final List<Transaction> transactions = [
-    Transaction(
-      id: 'a1',
-      title: 'books',
-      amount: 99.9,
-      dateTime: DateTime.now(),
-    ),
-    Transaction(
-      id: 'a2',
-      title: 'food',
-      amount: 49.9,
-      dateTime: DateTime.now(),
-    ),
+    // Transaction(
+    //   id: 'a1',
+    //   title: 'books',
+    //   amount: 99.9,
+    //   dateTime: DateTime.now(),
+    // ),
+    // Transaction(
+    //   id: 'a2',
+    //   title: 'food',
+    //   amount: 49.9,
+    //   dateTime: DateTime.now(),
+    // ),
   ];
   void _addNewTransaction(String txTitle, double txAmount) {
     final newTransaction = Transaction(
@@ -59,10 +65,11 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void openNewTransaction(BuildContext context) {
     showModalBottomSheet(
-        context: context,
-        builder: (_) {
-          return NewTransaction(_addNewTransaction);
-        });
+      context: context,
+      builder: (_) {
+        return NewTransaction(_addNewTransaction);
+      },
+    );
   }
 
   @override
@@ -70,7 +77,7 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
-        title: Text('appBar'),
+        title: Text('Personal Expanses'),
         actions: [
           IconButton(
             onPressed: () => openNewTransaction(context),
