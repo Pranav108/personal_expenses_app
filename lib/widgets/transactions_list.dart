@@ -1,6 +1,6 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
-
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:personal_expenses/models/transaction.dart';
 import '../models/transaction.dart';
 
@@ -67,43 +67,36 @@ class TransactionList extends StatelessWidget {
               itemCount: transactions.length,
               itemBuilder: (ctx, index) {
                 return Card(
+                  margin: EdgeInsets.all(10),
                   elevation: 4,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10),
                   ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Container(
-                        margin:
-                            EdgeInsets.symmetric(vertical: 8, horizontal: 10),
-                        padding: EdgeInsets.all(10),
-                        decoration: BoxDecoration(
-                          border: Border.all(
-                              color: Theme.of(context).primaryColor, width: 2),
-                        ),
-                        child: Text(
-                          transactions[index].amount.toStringAsFixed(2),
-                          style: TextStyle(
-                              color: Theme.of(context).primaryColor,
-                              fontSize: 20),
+                  child: ListTile(
+                    leading: CircleAvatar(
+                      radius: 30,
+                      backgroundColor: Colors.green,
+                      child: Padding(
+                        padding: const EdgeInsets.all(6.0),
+                        child: FittedBox(
+                          child: Text(
+                            transactions[index].amount.toStringAsFixed(1),
+                            style:
+                                TextStyle(color: Colors.purple, fontSize: 20),
+                          ),
                         ),
                       ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            transactions[index].title,
-                            style: TextStyle(
-                                fontWeight: FontWeight.w600, fontSize: 20),
-                          ),
-                          Text(
-                            transactions[index].dateTime.toString(),
-                          ),
-                        ],
-                      )
-                    ],
+                    ),
+                    title: Text(
+                      transactions[index].title,
+                      style: TextStyle(
+                        fontWeight: FontWeight.w600,
+                        fontSize: 20,
+                      ),
+                    ),
+                    subtitle: Text(
+                      DateFormat.yMMMd().format(transactions[index].dateTime),
+                    ),
                   ),
                 );
               },
