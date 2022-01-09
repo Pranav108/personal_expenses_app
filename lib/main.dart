@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
 
+import 'package:personal_expenses/widgets/chart.dart';
 import 'package:personal_expenses/widgets/transactions_list.dart';
 import 'package:personal_expenses/widgets/new_transaction.dart';
 
@@ -39,19 +40,26 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   final List<Transaction> transactions = [
-    // Transaction(
-    //   id: 'a1',
-    //   title: 'books',
-    //   amount: 99.9,
-    //   dateTime: DateTime.now(),
-    // ),
-    // Transaction(
-    //   id: 'a2',
-    //   title: 'food',
-    //   amount: 49.9,
-    //   dateTime: DateTime.now(),
-    // ),
+    Transaction(
+      id: 'a1',
+      title: 'books',
+      amount: 99.9,
+      dateTime: DateTime.now(),
+    ),
+    Transaction(
+      id: 'a2',
+      title: 'food',
+      amount: 49.9,
+      dateTime: DateTime.now(),
+    ),
   ];
+  List<Transaction> get _recentTransactions {
+    return transactions.where((element) {
+      return element.dateTime
+          .isAfter(DateTime.now().subtract(Duration(days: 7)));
+    }).toList();
+  }
+
   void _addNewTransaction(String txTitle, double txAmount) {
     final newTransaction = Transaction(
         title: txTitle,
@@ -87,10 +95,13 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       backgroundColor: Colors.grey.shade300,
       body: SingleChildScrollView(
-        child: Container(
-          child: TransactionList(
-            transactions: transactions,
-          ),
+        child: Column(
+          children: [
+            Chart(_recentTransactions),
+            TransactionList(
+              transactions: transactions,
+            ),
+          ],
         ),
       ),
       floatingActionButton: FloatingActionButton(
