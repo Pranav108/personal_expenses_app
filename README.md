@@ -1,6 +1,11 @@
 # personal_expenses
 
-A new Flutter project.
+We can use this app to keep track of our personal expenses, and will also show expenses ratio for last seven days.
+We can add time ,amount and title for each expenses.
+
+# screenshots
+
+<img src="Screenshots/groceries_app.gif" width="400"/>
 
 ## Getting Started
 

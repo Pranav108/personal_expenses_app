@@ -6,11 +6,13 @@ import '../models/transaction.dart';
 
 class TransactionList extends StatelessWidget {
   final List<Transaction> transactions;
-  TransactionList({required this.transactions});
+  final Function deleteTransaction;
+  TransactionList(
+      {required this.transactions, required this.deleteTransaction});
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 450,
+      height: 500,
       child: transactions.isEmpty
           ? Center(
               child: Column(
@@ -51,7 +53,7 @@ class TransactionList extends StatelessWidget {
                                   fontWeight: FontWeight.w900),
                             ),
                             TextSpan(
-                              text: ' to find your recommendation.',
+                              text: ' to add your expenses.',
                               style: TextStyle(
                                   fontSize: 20, color: Colors.pinkAccent),
                             )
@@ -75,14 +77,17 @@ class TransactionList extends StatelessWidget {
                   child: ListTile(
                     leading: CircleAvatar(
                       radius: 30,
-                      backgroundColor: Colors.green,
+                      backgroundColor: Colors.orange,
                       child: Padding(
-                        padding: const EdgeInsets.all(6.0),
+                        padding: EdgeInsets.all(6.0),
                         child: FittedBox(
                           child: Text(
-                            transactions[index].amount.toStringAsFixed(1),
-                            style:
-                                TextStyle(color: Colors.purple, fontSize: 20),
+                            '\u{20B9} ' +
+                                transactions[index].amount.toStringAsFixed(1),
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 20,
+                                fontWeight: FontWeight.w500),
                           ),
                         ),
                       ),
@@ -92,10 +97,19 @@ class TransactionList extends StatelessWidget {
                       style: TextStyle(
                         fontWeight: FontWeight.w600,
                         fontSize: 20,
+                        fontFamily: 'Quicksand',
                       ),
                     ),
                     subtitle: Text(
                       DateFormat.yMMMd().format(transactions[index].dateTime),
+                    ),
+                    trailing: IconButton(
+                      onPressed: () =>
+                          deleteTransaction(transactions[index].id),
+                      icon: Icon(
+                        Icons.delete,
+                        color: Colors.red,
+                      ),
                     ),
                   ),
                 );

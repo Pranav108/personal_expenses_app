@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
+// ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors, unused_element
 
 import 'package:personal_expenses/widgets/chart.dart';
 import 'package:personal_expenses/widgets/transactions_list.dart';
@@ -16,17 +16,15 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final ThemeData theme = ThemeData(
-      fontFamily: 'Quicksand',
-    );
+    final ThemeData theme = ThemeData();
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
+      // title: 'Quicksand',
       theme: theme.copyWith(
         colorScheme: theme.colorScheme.copyWith(
             primary: Colors.purple,
-            secondary: Colors.teal,
-            tertiary: Colors.green),
+            secondary: Colors.green,
+            tertiary: Colors.blue),
       ),
       home: MyHomePage(),
     );
@@ -40,18 +38,36 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   final List<Transaction> transactions = [
-    // Transaction(
-    //   id: 'a1',
-    //   title: 'books',
-    //   amount: 99.9,
-    //   dateTime: DateTime.now(),
-    // ),
-    // Transaction(
-    //   id: 'a2',
-    //   title: 'food',
-    //   amount: 49.9,
-    //   dateTime: DateTime.now(),
-    // ),
+    Transaction(
+      id: DateTime.now().subtract(Duration(days: 5)).toString(),
+      title: 'books',
+      amount: 230,
+      dateTime: DateTime.now().subtract(Duration(days: 5)),
+    ),
+    Transaction(
+      id: DateTime.now().subtract(Duration(days: 2)).toString(),
+      title: 'food',
+      amount: 200,
+      dateTime: DateTime.now().subtract(Duration(days: 2)),
+    ),
+    Transaction(
+      id: DateTime.now().subtract(Duration(days: 4)).toString(),
+      title: 'movies',
+      amount: 650,
+      dateTime: DateTime.now().subtract(Duration(days: 4)),
+    ),
+    Transaction(
+      id: DateTime.now().subtract(Duration(days: 3)).toString(),
+      title: 'T-Shirt',
+      amount: 450,
+      dateTime: DateTime.now().subtract(Duration(days: 3)),
+    ),
+    Transaction(
+      id: DateTime.now().toString(),
+      title: 'tickets',
+      amount: 350,
+      dateTime: DateTime.now(),
+    ),
   ];
   List<Transaction> get _recentTransactions {
     return transactions.where((element) {
@@ -60,14 +76,21 @@ class _MyHomePageState extends State<MyHomePage> {
     }).toList();
   }
 
-  void _addNewTransaction(String txTitle, double txAmount) {
+  void _addNewTransaction(
+      String txTitle, double txAmount, DateTime choosenDate) {
     final newTransaction = Transaction(
         title: txTitle,
         amount: txAmount,
-        dateTime: DateTime.now(),
+        dateTime: choosenDate,
         id: DateTime.now().toString());
     setState(() {
       transactions.add(newTransaction);
+    });
+  }
+
+  void _deleteTransaction(String id) {
+    setState(() {
+      transactions.removeWhere((element) => element.id == id);
     });
   }
 
@@ -85,7 +108,12 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
-        title: Text('Personal Expanses'),
+        title: Text(
+          'Personal Expenses',
+          style: TextStyle(
+            fontFamily: 'Aclonica',
+          ),
+        ),
         actions: [
           IconButton(
             onPressed: () => openNewTransaction(context),
@@ -100,6 +128,7 @@ class _MyHomePageState extends State<MyHomePage> {
             Chart(_recentTransactions),
             TransactionList(
               transactions: transactions,
+              deleteTransaction: _deleteTransaction,
             ),
           ],
         ),

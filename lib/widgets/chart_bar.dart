@@ -21,9 +21,11 @@ class ChartBar extends StatelessWidget {
           height: 10,
         ),
         SizedBox(
-            height: 20,
-            child: FittedBox(
-                child: Text('\$${spendingAmount.toStringAsFixed(0)}'))),
+          height: 20,
+          child: FittedBox(
+            child: Text('\u{20B9}${spendingAmount.toStringAsFixed(0)}'),
+          ),
+        ),
         SizedBox(
           height: 10,
         ),
@@ -34,19 +36,20 @@ class ChartBar extends StatelessWidget {
             borderRadius: BorderRadius.all(Radius.circular(20)),
           ),
           child: Stack(
+            alignment: AlignmentDirectional.bottomEnd,
             children: [
               Container(
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.all(Radius.circular(20)),
                   color: Colors.grey.shade400,
-                  border: Border.all(color: Colors.blueGrey, width: 2),
+                  border: Border.all(color: Colors.blueGrey, width: 1),
                 ),
               ),
               FractionallySizedBox(
                 heightFactor: spendingPctOfTotal,
                 child: Container(
                   decoration: BoxDecoration(
-                    border: Border.all(color: Colors.blueGrey, width: 2),
+                    border: Border.all(color: Colors.blueGrey, width: 1),
                     borderRadius: BorderRadius.all(
                       Radius.circular(20),
                     ),
